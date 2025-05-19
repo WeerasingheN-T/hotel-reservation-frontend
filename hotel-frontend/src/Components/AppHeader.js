@@ -14,14 +14,25 @@ import MenuItem from "@mui/material/MenuItem";
 import LoginIcon from "@mui/icons-material/Login";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { useNavigate } from "react-router-dom";
-
-const pages = ["Home", "About"];
+import { useSelector } from 'react-redux';
 
 function AppHeader() {
+
+  const pages = [
+    {
+      name: "Home",
+      link: "/"
+    },
+    {
+      name: "About",
+      link: ""
+    }];
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const user = useSelector(state => state.auth.user);
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = React.useState(user); 
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -61,8 +72,8 @@ function AppHeader() {
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+                <MenuItem key={page.name} onClick={()=>{handleCloseNavMenu(); navigate(`${page.link}`)}}>
+                  <Typography sx={{ textAlign: "center" }}>{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -70,8 +81,8 @@ function AppHeader() {
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white" }}>
-                {page}
+              <Button key={page.name} onClick={()=>{handleCloseNavMenu(); navigate(`${page.link}`)}} sx={{ my: 2, color: "white" }}>
+                {page.name}
               </Button>
             ))}
           </Box>
@@ -85,7 +96,7 @@ function AppHeader() {
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Sign In">
-                  <IconButton color="inherit" onClick={()=> navigate("/")}>
+                  <IconButton color="inherit" onClick={()=> navigate("/signin")}>
                     <LoginIcon/>
                   </IconButton>
                 </Tooltip>
@@ -94,7 +105,7 @@ function AppHeader() {
               <>
                  <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt="User Avatar" src="" />
+                      <Avatar alt="User Avatar" src={user.profileImageUrl} />
                     </IconButton>
                   </Tooltip>
                   <Menu
@@ -106,7 +117,7 @@ function AppHeader() {
                       anchorOrigin={{ vertical: "top", horizontal: "right" }}
                       transformOrigin={{ vertical: "top", horizontal: "right" }}
                     >
-                   <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/profile"); }}>
+                   <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/hotels/user"); }}>
                       <Typography sx={{ textAlign: "center" }}>Profile</Typography>
                    </MenuItem>
                    <MenuItem onClick={() => { handleCloseUserMenu(); setIsLoggedIn(false); }}>

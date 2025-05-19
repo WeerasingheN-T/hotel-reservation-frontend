@@ -8,6 +8,7 @@ import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import ButtonLayout from "../Components/ButtonLayout";
+import Reviews from "../Components/Reviews";
 import axios from "axios";
 
 function HotelDetail() {
@@ -94,6 +95,24 @@ function HotelDetail() {
                         </Grid>
                     </Box>
                     <Box display='flex' alignItems="center" gap={1} mt={3}>
+                        <Rating
+                           value={
+                                hotel.ratings.length > 0
+                                ? hotel.ratings.reduce((sum, r) => sum + r.stars, 0) / hotel.ratings.length
+                                : 0
+                            }
+                            precision={0.5}
+                            readOnly
+                        />
+                        <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+                          {hotel.ratings.length > 0
+                            ? (
+                            hotel.ratings.reduce((sum, r) => sum + r.stars, 0) /
+                            hotel.ratings.length
+                            ).toFixed(1)
+                            : "No ratings yet"}
+                        </Typography>
+
                         <Rating value={hotel.Ratings || 0} precision={0.5} readOnly/>
                         <Typography variant="body2" color="text.secondary">
                             Ratings: {hotel.Ratings || "Not Rated"}
@@ -110,6 +129,7 @@ function HotelDetail() {
                     
                 </Grid>
             </Grid>
+            <Reviews hotelId={id} />
         </Box>
     )
 }

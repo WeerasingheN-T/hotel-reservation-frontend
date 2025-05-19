@@ -38,7 +38,7 @@ function SignUp() {
         axios.post('http://localhost:5007/api/User/register', user)
         .then(res => {
             alert(res.data.message);
-            navigate('/'); 
+            navigate('/signin'); 
         })
         .catch((err) => {
            alert(err.message);
@@ -161,7 +161,7 @@ function SignUp() {
 
               <Typography textAlign="center" fontSize="14px">
                 Already have an account?{' '}
-                <Link to="/" style={{ textDecoration: 'none', color: '#1976d2' }}>
+                <Link to="/signin" style={{ textDecoration: 'none', color: '#1976d2' }}>
                   Sign In
                 </Link>
               </Typography>

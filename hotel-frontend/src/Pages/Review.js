@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Box, Typography, TextField, Rating, Paper } from '@mui/material';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import ButtonLayout from '../Components/ButtonLayout';
+import axios from 'axios';
 
 function Review() {
 
@@ -11,8 +12,26 @@ function Review() {
     const location = useLocation();
     const details = location.state?.hotel;
 
-    const handleSubmit =()=> {
+    const handleSubmit = async() => {
+        if(rating === 0 || review.trim() === ""){
+            alert("Please provide a rating and a review.");
+            return;
+        }
 
+        const newReview ={
+            Stars: rating,
+            Comment: review,
+            HotelId: details.id
+        };
+
+        try{
+            const response = await axios.post("http://localhost:5007/api/Rating",newReview);
+            alert("Review submitted successfully!");
+            setRating(0);
+            setReview("");
+        } catch(error){
+            alert("Failed to submit review.");
+        }
     };
 
     return (

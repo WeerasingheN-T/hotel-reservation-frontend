@@ -64,7 +64,7 @@ function Home() {
         </Button>
       </Box>
 
-      <HotelsGrid />
+      <HotelsGrid component="Home" />
     </>
   );
 }

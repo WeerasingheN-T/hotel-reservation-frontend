@@ -7,6 +7,7 @@ import Booking from './Pages/Booking';
 import Review from './Pages/Review';
 import SignUp from './Pages/SignUp';
 import SignIn from './Pages/SignIn';
+import Profile from './User/Profile';
 
 function App() {
   return (
@@ -14,12 +15,13 @@ function App() {
          <div className='App'>
           <AppHeader/>
           <Routes>
-            <Route path='/' element={<SignIn/>} />
+            <Route path='/' element={<Home/>} />
+            <Route path='/signin' element={<SignIn/>} />
             <Route path='/signup' element={<SignUp/>} />
-            <Route path='/hotels' element={<Home/>} />
             <Route path='/hotels/:id' element={<HotelDetail/>} />
             <Route path='/hotels/booking' element={<Booking/>} />
             <Route path='/hotels/review' element={<Review/>} />
+            <Route path='/hotels/user' element={<Profile/>} />
           </Routes>
          </div>
      </BrowserRouter>

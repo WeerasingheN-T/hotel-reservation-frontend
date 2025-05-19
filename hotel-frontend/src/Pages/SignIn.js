@@ -7,13 +7,16 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PersonIcon from '@mui/icons-material/Person';
 import ButtonLayout from '../Components/ButtonLayout';
 import { validateEmail, validatePassword } from '../Validations/Uservalid';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../features/auth/authSlice';
 import axios from 'axios';
 
 function SignIn() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);                     
   const [emailError, setEmailError] = useState('');                
   const [passwordError, setPasswordError] = useState('');         
@@ -37,8 +40,9 @@ function SignIn() {
         const user = { email, password };
         axios.post('http://localhost:5007/api/User/login', user)
         .then(res => {
+            dispatch(setUser(res.data.user));
             alert(res.data.message);
-            navigate('/hotels'); 
+            navigate('/hotels/user'); 
         })
         .catch((err) => {
            alert(err.message);

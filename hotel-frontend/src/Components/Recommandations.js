@@ -2,46 +2,14 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, Divider, Card, Grid, CardMedia, CardContent, Container, Pagination } from '@mui/material';
 import usePagination from "../Pagination/usePagination";
-import HotelFilter from "./HotelFilter";
 import axios from "axios";
 
-function HotelsGrid({component}) {
+function Recommandations() {
 
   const [hotels, setHotels] = React.useState([]);
-  const [filteredHotels, setFilteredHotels] = React.useState([]);
-  const hotelPerpage = 10;
+  const hotelPerpage = 2;
 
   const navigate = useNavigate();
-
-  const [filters, setFilters] = React.useState({
-    destination: "",
-    rating: "",
-    hotelName: "",
-  });
-
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSearch = () => {
-    const filtered = hotels.filter((hotel)=> {
-      const destinationMatch = filters.destination ? 
-      hotel.location?.toLowerCase().includes(filters.destination.toLowerCase()) : true;
-
-      const ratingMatch = filters.rating ?
-      hotel.Ratings?.toString() === filters.rating.toString() : true;
-
-      const hotelNameMatch = filters.hotelName? 
-      hotel.hotelName?.toLowerCase().includes(filters.hotelName.toLowerCase()) : true;
-
-      return destinationMatch && ratingMatch && hotelNameMatch;
-    });
-    setFilteredHotels(filtered);
-  };
 
   React.useEffect(() => {
     const getHotels = async () => {
@@ -56,8 +24,15 @@ function HotelsGrid({component}) {
     getHotels();
   }, []);
 
+  const starsHotels = hotels.filter(hotel=> {
+    if(!hotel.ratings || hotel.ratings.length === 0) return false;
+    const avgRatings = hotel.ratings.reduce((sum,r)=>sum + r.stars, 0)/hotel.ratings.length;
+
+    return avgRatings >= 4.00;
+  })
+
   const { currentData, currentPage, maxPage, jump } = usePagination (
-    hotels,
+    starsHotels,
     hotelPerpage
   );
 
@@ -82,10 +57,8 @@ function HotelsGrid({component}) {
           </Typography>
         ) : (
             <>
-            { component === "Home" && (
-                <HotelFilter filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} /> )}
                <Grid container spacing={2} m={1.5}>
-                              {(filteredHotels.length > 0 ? filteredHotels : currentData()).map((hotel) => (
+                              {currentData().map((hotel) => (
                                   <Grid item xs={12} sm={6} md={4} key={hotel.id}>
                                       <Card
                                           onClick={()=>navigate(`/hotels/${hotel.id}`)}
@@ -144,4 +117,4 @@ function HotelsGrid({component}) {
   );
 }
 
-export default HotelsGrid;
+export default Recommandations;
