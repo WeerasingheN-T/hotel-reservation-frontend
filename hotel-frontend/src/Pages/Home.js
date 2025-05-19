@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
-import { Box, Button } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import HotelsGrid from "../Components/HotelsGrid";
+import HotelMap from "../Components/HotelMap";
 
 function Home() {
   const videoRef = useRef(null);
@@ -16,55 +17,29 @@ function Home() {
 
   return (
     <>
-      <Box
-        sx={{
-          position: 'relative',
-          width: '100%',
-          height: '60vh', 
-          overflow: 'hidden',
+    <Box 
+       sx={{ width: '100%',
+        height: '400px',
+        backgroundImage: `url('/images/welcomeImg.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        color: "white",
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'flex-end'
         }}
       >
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover', 
-            zIndex: -1,
-          }}
-        >
-          <source src="/videos/welcome.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-
-        <Button
-          onClick={handleUnmute}
-          variant="contained"
-          startIcon={<VolumeUpIcon />}
-          sx={{
-            position: "absolute",
-            bottom: 30,
-            left: 30,
-            backgroundColor: "rgba(0,0,0,0.5)",
-            color: "white",
-            zIndex: 1,
-            "&:hover": {
-              backgroundColor: "rgba(0,0,0,0.7)",
-            },
-          }}
-        >
-          Sound
-        </Button>
+        <Box sx={{ padding: '100px 60px', textAlign: 'left'}}>
+          <Typography variant="h2" sx={{ fontWeight: 'bold'}}>Recharge</Typography>
+          <Typography variant="h2" sx={{ fontWeight: 'bold' }}>in a vacation home</Typography>
+          <Typography variant="h5">Discover Beautiful Hotels in Sri Lanka</Typography>
+        </Box>
+          
       </Box>
-
-      <HotelsGrid component="Home" />
+      <Box mt={-3}>
+        <HotelsGrid />
+      </Box>
+      
     </>
   );
 }

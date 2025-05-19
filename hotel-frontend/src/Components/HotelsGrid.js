@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Box, Typography, Divider, Card, Grid, CardMedia, CardContent, Container, Pagination } from '@mui/material';
 import usePagination from "../Pagination/usePagination";
 import HotelFilter from "./HotelFilter";
+import WelcomeVedio from "./WelcomeVedio";
+import HotelMap from "./HotelMap";
 import axios from "axios";
 
-function HotelsGrid({component}) {
+function HotelsGrid() {
 
   const [hotels, setHotels] = React.useState([]);
   const [filteredHotels, setFilteredHotels] = React.useState([]);
@@ -68,22 +70,33 @@ function HotelsGrid({component}) {
 
   return (
     <Container sx={{ margin: '10px', maxWidth: "1480px !important"}}>
-        <Box textAlign="left">
-        <Typography fontWeight="bold" variant="h6">
-          Recommended Places
-        </Typography>
-        <Divider />
+        <Box textAlign="left" mb={3}>
+          <HotelFilter filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} />
+          <Typography fontWeight="bold" variant="h6" mt={-2}>
+            Location Map
+          </Typography>
+          <Divider />
+          <Grid container>
+            <Grid item xs={12} md={6} sx={{ minWidth: '550px' }}>
+              <HotelMap hotels={filteredHotels.length > 0 ? filteredHotels : hotels} />
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ minWidth: '880px' }}>
+              <WelcomeVedio/>
+            </Grid>
+          </Grid>
       </Box>
 
       <Box>
         {hotels.length === 0 ? (
-          <Typography variant="body1" textAlign="center">
-            No hotels available.
-          </Typography>
+            <>
+              <Divider />
+              <Typography variant="body1" textAlign="center">
+                No hotels available.
+              </Typography>
+            </>
         ) : (
             <>
-            { component === "Home" && (
-                <HotelFilter filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} /> )}
+               <Divider/>
                <Grid container spacing={2} m={1.5}>
                               {(filteredHotels.length > 0 ? filteredHotels : currentData()).map((hotel) => (
                                   <Grid item xs={12} sm={6} md={4} key={hotel.id}>

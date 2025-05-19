@@ -109,16 +109,19 @@ function Profile () {
     };
 
     return (
-        <Box sx={{ p: 10 }}>
-            <Box>
-                
-            </Box>
+        <>
+        <Box sx={{
+                width: "100%",
+                height: "300px",
+                backgroundColor: '#332925'
+        }}/>
+        <Box sx={{ p: 10, mt: -28 }}>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={6} sx={{ minWidth: '800px' }}>
+                <Grid item xs={12} md={6} sx={{ minWidth: '900px' }}>
                    <Paper elevation={3} sx={{ p: 2, mb: 4 }}>
                        <Box display="flex" alignItems="center">
                             <Box position="relative" display="inline-block" sx={{ ml: 4 }}>
-                                <Avatar src={user.profileImageUrl || ""} sx={{ width: 130, height: 130, ml: 4, mt: 2 }}/>
+                                <Avatar src={user.profileImageUrl || ""} sx={{ width: 140, height: 140, ml: 2, mt: 3 }}/>
                                 <IconButton sx={{
                                     position: 'absolute',
                                     bottom: 0,
@@ -132,7 +135,7 @@ function Profile () {
                                 </IconButton>
                             </Box>
                             
-                            <Box flexGrow={1}>
+                            <Box flexGrow={1} sx={{ textAlign: 'left', ml: 4 }}>
                                <Typography variant='h3' sx={{ fontFamily: "'Playwrite DK Loopet', cursive", 
                                   color: '#2F1B12', mb: 2 }}>
                                    Hello...
@@ -165,7 +168,7 @@ function Profile () {
                         <Button color='inherit' sx={{ backgroundColor: '#d9381e' }}>Delete Account</Button>
                     </Box>  
                 </Grid>
-                <Grid item xs={12} md={6} sx={{ maxWidth: '300px', maxHeight:'600px' }}>
+                <Grid item xs={12} md={6} ml={4} mt={-3} sx={{ maxWidth: '300px', maxHeight:'600px' }}>
                     <Recommandations />
                 </Grid>
             </Grid>
@@ -177,6 +180,7 @@ function Profile () {
                 </DialogActions>
             </Dialog>
         </Box>
+        </>
     )
 };
 

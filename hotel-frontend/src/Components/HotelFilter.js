@@ -18,7 +18,9 @@ function HotelFilter({ filters, handleFilterChange, handleSearch }) {
           border: '3px solid #febe10',
           p: 2,
           m: 4,
+          ml: -1,
           boxShadow: 2,
+          width: '98%'
         }}
       >
         <TextField
