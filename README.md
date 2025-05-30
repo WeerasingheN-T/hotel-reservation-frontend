@@ -17,3 +17,5 @@ Also, admin panel can,
 * delete hotels
 * view all bookings made by guests
 * cancel booking made by guests
+
+This repository includes only the frontend part of the application using React JS, Redux JS, Material UI and React Leaflet for interactive maps.
