@@ -1,3 +1,3 @@
 # hotel-reservation-frontend
 
-#In progress
+# Project Status - In progress
