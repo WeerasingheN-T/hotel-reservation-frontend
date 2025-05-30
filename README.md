@@ -2,7 +2,7 @@
 
 # Project Status - In progress
 
-Stayora is a full-stack web application for Online Hotel Reservation Platform(belongs to a virtual organization). It facilates users to,
+Stayora is a full-stack web application for an Online Hotel Reservation Platform(belongs to a virtual organization). It facilates users to,
 * register with the app and login
 * view available hotels in Sri Lanka
 * view hotel locations through the Map
