@@ -14,7 +14,10 @@ import MenuItem from "@mui/material/MenuItem";
 import LoginIcon from "@mui/icons-material/Login";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { logout } from "../features/auth/authSlice";
+import { useSelector } from "react-redux";
+import { persistor } from "../app/store";
 
 function AppHeader() {
 
@@ -31,9 +34,17 @@ function AppHeader() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const user = useSelector(state => state.auth.user);
-
   const [isLoggedIn, setIsLoggedIn] = React.useState(user); 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const handleLogout =()=> {
+    dispatch(logout);
+    persistor.purge();
+
+    setIsLoggedIn(false);
+    navigate("/signin");
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -120,7 +131,7 @@ function AppHeader() {
                    <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/hotels/user"); }}>
                       <Typography sx={{ textAlign: "center" }}>Profile</Typography>
                    </MenuItem>
-                   <MenuItem onClick={() => { handleCloseUserMenu(); setIsLoggedIn(false); }}>
+                   <MenuItem onClick={() => { handleCloseUserMenu(); handleLogout(); }}>
                       <Typography sx={{ textAlign: "center" }}>Logout</Typography>
                    </MenuItem>
                   </Menu>

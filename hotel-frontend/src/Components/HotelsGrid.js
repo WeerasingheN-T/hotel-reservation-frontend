@@ -7,11 +7,10 @@ import WelcomeVedio from "./WelcomeVedio";
 import HotelMap from "./HotelMap";
 import axios from "axios";
 
-function HotelsGrid() {
+function HotelsGrid({component, itemsPerPage}) {
 
   const [hotels, setHotels] = React.useState([]);
   const [filteredHotels, setFilteredHotels] = React.useState([]);
-  const hotelPerpage = 10;
 
   const navigate = useNavigate();
 
@@ -60,7 +59,7 @@ function HotelsGrid() {
 
   const { currentData, currentPage, maxPage, jump } = usePagination (
     hotels,
-    hotelPerpage
+    itemsPerPage
   );
 
   const handlePageChange = (event, value) => {
@@ -70,6 +69,7 @@ function HotelsGrid() {
 
   return (
     <Container sx={{ margin: '10px', maxWidth: "1480px !important"}}>
+      { component === "home" ? 
         <Box textAlign="left" mb={3}>
           <HotelFilter filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} />
           <Typography fontWeight="bold" variant="h6" mt={-2}>
@@ -84,7 +84,7 @@ function HotelsGrid() {
               <WelcomeVedio/>
             </Grid>
           </Grid>
-      </Box>
+      </Box>: <></>}
 
       <Box>
         {hotels.length === 0 ? (

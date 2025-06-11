@@ -18,7 +18,6 @@ function Profile () {
     const [hotelDetails, setHotelDetails] = useState([]);
 
     const user = useSelector(state => state.auth.user);
-    console.log(user)
 
     useEffect(()=> {
         const fetchData = async()=> {

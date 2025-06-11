@@ -43,6 +43,10 @@ function SignIn() {
             dispatch(setUser(res.data.user));
             alert(res.data.message);
             navigate('/hotels/user'); 
+
+            if(res.data.user.role === "Admin"){
+              navigate('/hotels/admin-dashboard');
+            }
         })
         .catch((err) => {
            alert(err.message);

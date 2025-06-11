@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid, CardMedia, Paper, Rating } from "@mui/material";
+import { Box, Typography, Grid, CardMedia, Paper, Rating, IconButton } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import LocalParkingIcon from "@mui/icons-material/LocalParking";
 import WifiIcon from "@mui/icons-material/Wifi";
@@ -8,7 +8,9 @@ import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import ButtonLayout from "../Components/ButtonLayout";
+import EditIcon from '@mui/icons-material/Edit';
 import Reviews from "../Components/Reviews";
+import { useSelector } from 'react-redux';
 import axios from "axios";
 
 function HotelDetail() {
@@ -17,6 +19,7 @@ function HotelDetail() {
     const [hotel,setHotel] = React.useState(null);
 
     const navigate = useNavigate();
+    const user = useSelector(state => state.auth.user);
 
     const facilities = [
         {
@@ -53,6 +56,10 @@ function HotelDetail() {
         return <Typography textAlign="center">Loading....</Typography>
     }
 
+    const editHotel =()=> {
+        navigate('/hotels/admin-dashboard/edit');
+    }
+
     return (
         <>
         <Box sx={{
@@ -76,6 +83,14 @@ function HotelDetail() {
                     </Grid>
 
                     <Grid item xs={12} md={4} mt={12}>
+                        { user.role === "Admin" ? (
+                            <IconButton sx={{ ml: 70, mt: -20, color: 'white', backgroundColor: 'black' }}
+                               onClick={()=> editHotel()}>
+                               <EditIcon/>
+                            </IconButton>
+                        ):(
+                            <></>
+                        )} 
                         <Paper elevation={2} sx={{ p: 2, mb: 2, maxWidth: "600px" }}>
                             <Typography variant="body1">
                                 {hotel.description}
@@ -121,14 +136,19 @@ function HotelDetail() {
                                 Ratings: {hotel.Ratings || "Not Rated"}
                             </Typography>
                         </Box>
-                        <Box display="flex" mt={5} gap={5} justifyContent="center">
-                            <ButtonLayout icon={BookOnlineIcon}
-                                name="Book Now"
-                                onClick={() => navigate('/hotels/booking', { state: { hotel } })} />
-                            <ButtonLayout icon={RateReviewIcon}
-                                name="Rate & Review"
-                                onClick={() => navigate('/hotels/review', { state: { hotel } })} />
-                        </Box>
+                        { user.role === "User" ? (
+                            <Box display="flex" mt={5} gap={5} justifyContent="center">
+                                <ButtonLayout icon={BookOnlineIcon}
+                                   name="Book Now"
+                                   onClick={() => navigate('/hotels/booking', { state: { hotel } })} />
+                                <ButtonLayout icon={RateReviewIcon}
+                                   name="Rate & Review"
+                                   onClick={() => navigate('/hotels/review', { state: { hotel } })} />
+                            </Box>
+                        ) : (
+                            <></>
+                        ) }
+                        
 
                     </Grid>
                 </Grid>

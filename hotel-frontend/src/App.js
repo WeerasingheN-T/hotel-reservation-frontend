@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
 import AppHeader from './Components/AppHeader';
 import Home from './Pages/Home';
 import HotelDetail from './Pages/HotelDetail';
@@ -8,6 +9,7 @@ import Review from './Pages/Review';
 import SignUp from './Pages/SignUp';
 import SignIn from './Pages/SignIn';
 import Profile from './User/Profile';
+import AddHotels from './Admin/AddHotels';
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
             <Route path='/hotels/booking' element={<Booking/>} />
             <Route path='/hotels/review' element={<Review/>} />
             <Route path='/hotels/user' element={<Profile/>} />
+            <Route path='/hotels/admin-dashboard' element={<AddHotels/>}/>
           </Routes>
          </div>
      </BrowserRouter>

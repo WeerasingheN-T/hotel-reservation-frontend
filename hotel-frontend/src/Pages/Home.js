@@ -37,7 +37,7 @@ function Home() {
           
       </Box>
       <Box mt={-3}>
-        <HotelsGrid />
+        <HotelsGrid component="home" itemsPerPage="10"/>
       </Box>
       
     </>
